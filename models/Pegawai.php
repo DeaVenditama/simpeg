@@ -45,7 +45,7 @@ class Pegawai extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [
             [['nip', 'nama', 'tempat_lahir', 'tanggal_lahir', 'agama', 'jenis_kelamin', 'nikah', 'status_pegawai', 'alamat', 'telepon', 'email', 'created_date', 'created_by'], 'required'],
             [['nama', 'alamat', 'salt', 'password'], 'string'],
-            [['tanggal_lahir', 'created_date', 'updated_date'], 'safe'],
+            [['tanggal_lahir', 'created_date', 'updated_date','tmt'], 'safe'],
             [['agama', 'jenis_kelamin', 'nikah', 'status_pegawai', 'created_by', 'updated_by'], 'integer'],
             [['nip', 'tempat_lahir', 'email'], 'string', 'max' => 32],
             [['telepon'], 'string', 'max' => 15],
@@ -63,6 +63,7 @@ class Pegawai extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'nama' => 'Nama',
             'tempat_lahir' => 'Tempat Lahir',
             'tanggal_lahir' => 'Tanggal Lahir',
+            'tmt' => 'Terhitung Mulai Tugas',
             'agama' => 'Agama',
             'jenis_kelamin' => 'Jenis Kelamin',
             'nikah' => 'Nikah',

@@ -67,8 +67,20 @@ class PegawaiController extends Controller
         $model = new Pegawai();
 
         if ($model->load(Yii::$app->request->post())) {
+
+            $foto = UploadedFile::getInstance($model,'foto');
+
+            if(!is_null($foto)){
+                $date = date("YmdHis");
+                $fileName=Yii::$app->user->identity->nip.$date.'.'.$foto->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/foto/';
+                $pathUpload = Yii::$app->params['uploadPath'].$fileName;
+                $foto->saveAs($pathUpload);
+                $model->foto = $fileName;
+            }
+
             $model->created_date = date('Y-m-d H:i:s');
-            $model->created_by = 0;
+            $model->updated_by = Yii::$app->user->identity->id;
             $model->save();
             
             return $this->redirect(['view', 'id' => $model->id]);
@@ -91,8 +103,24 @@ class PegawaiController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+
+            $foto = UploadedFile::getInstance($model,'foto');
+            $temp_foto = $model->foto;
+
+            if(!is_null($foto)){
+                $date = date("YmdHis");
+                $fileName=Yii::$app->user->identity->nip.$date.'.'.$foto->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/foto/';
+                $pathUpload = Yii::$app->params['uploadPath'].$fileName;
+                $foto->saveAs($pathUpload);
+                $model->foto = $fileName;
+            }else{
+                $model->foto = $temp_foto;
+            }
+
+
             $model->updated_date = date('Y-m-d H:i:s');
-            $model->updated_by = 0;
+            $model->updated_by = Yii::$app->user->identity->id;
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
