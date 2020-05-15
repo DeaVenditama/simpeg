@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
+use kartik\file\FileInput;
 /* @var $this yii\web\View */
 /* @var $model app\models\Pegawai */
 /* @var $form yii\widgets\ActiveForm */
@@ -24,9 +25,35 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'nama')->textarea(['rows' => 1]) ?>
 
+    <?php 
+        echo $form->field($model, 'foto')->widget(FileInput::classname(), [
+            'pluginOptions'=>
+            [
+                'allowedFileExtensions'=>['jpeg','jpg','png'],
+                'showUpload' => false,
+                'browseLabel' => '',
+                'removeLabel' => '',
+                'showPreview' => true,
+                'showCaption' => true,
+                'showRemove' => true,
+            ]
+        ]);
+    ?>
+
     <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'tanggal_lahir')->widget(DatePicker::class, [
+        'language' => 'id',
+        'dateFormat' => 'yyyy-MM-dd',
+        'options'=>[
+            'class' => 'form-control',
+            'style' => [
+                'cursor'=>'pointer'
+            ]
+        ]
+    ]) ?>
+
+    <?= $form->field($model, 'tmt')->widget(DatePicker::class, [
         'language' => 'id',
         'dateFormat' => 'yyyy-MM-dd',
         'options'=>[

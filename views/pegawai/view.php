@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'nip',
+                    'tmt',
                     'nama:ntext',
                     'tempat_lahir',
                     'tanggal_lahir',

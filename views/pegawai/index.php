@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PegawaiSearch */
@@ -24,27 +25,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
-                    'nip',
                     'nama:ntext',
-                    'tempat_lahir',
-                    'tanggal_lahir',
-                    //'agama',
-                    //'jenis_kelamin',
-                    //'nikah',
-                    //'status_pegawai',
-                    //'alamat:ntext',
-                    //'telepon',
-                    //'email:email',
-                    //'salt:ntext',
-                    //'password:ntext',
-                    //'created_date',
-                    //'created_by',
-                    //'updated_date',
-                    //'updated_by',
-
-                    ['class' => 'yii\grid\ActionColumn'],
+                    'nip',
+                    'email:email',
+                    [
+                        'header' => 'Action',
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{view} {update} {delete}',
+                        'buttons' => [
+                            'view' => function ($url) {
+                                return Html::a('view', $url, ['class'=>'btn btn-primary']);
+                            },
+                            'update' => function ($url,$model) {
+                                return Html::a('update', $url, ['class'=>'btn btn-success']);
+                            },
+                            'delete' => function ($url,$model) {
+                                return Html::a('delete', $url, ['class'=>'btn btn-danger']);
+                            } 
+                        ],
+                    ],
                 ],
             ]); ?>
         </div>        
