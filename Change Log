@@ -1,2 +1,26 @@
 Part 2
 1. Tambah kolom foto, method buat upload foto (kartik file input)
+a. Install kartik File Input
+b. Update di pegawai/_form
+c. Update di controllers/pegawaiController, actionCreate & actionUpdate, jangan lupa use FileUpload
+d. Update di view biar keliatan fotonya.
+
+2.Pangkat Golongan
+Buat tabel master_pangkat_golongan
+Buat tabel pegawai_pangkat_golongan
+Model master_pangkat_golongan,pegawai_pangkat_golongan
+CRUD pegawai_pangkat_golongan
+Tambah button add pangkat di view/pegawai/index
+Ubah tampilan add pangkat
+Install Select2
+Fungsi add pangkat
+Ubah view pangkat
+Update Model Pegawai
+Update view pegawai
+History pangkat golongan
+Ubah view index pangkat golongan
+
+Buat Tabel pendidikan & master
+CRUD pendidikan
+Tambah button add pendidikan di view/pegawai/index
+sama kayak yang pangkat golongan

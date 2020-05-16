@@ -3,16 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Pegawai;
-use app\models\PegawaiSearch;
+use app\models\PegawaiPendidikan;
+use app\models\PegawaiPendidikanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 /**
- * PegawaiController implements the CRUD actions for Pegawai model.
+ * PegawaiPendidikanController implements the CRUD actions for PegawaiPendidikan model.
  */
-class PegawaiController extends Controller
+class PegawaiPendidikanController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,22 +31,26 @@ class PegawaiController extends Controller
     }
 
     /**
-     * Lists all Pegawai models.
+     * Lists all PegawaiPendidikan models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PegawaiSearch();
+        $id_pegawai = Yii::$app->request->get('id_pegawai');
+
+        $searchModel = new PegawaiPendidikanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['id_pegawai'=>$id_pegawai]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'id_pegawai' => $id_pegawai,
         ]);
     }
 
     /**
-     * Displays a single Pegawai model.
+     * Displays a single PegawaiPendidikan model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,41 +63,49 @@ class PegawaiController extends Controller
     }
 
     /**
-     * Creates a new Pegawai model.
+     * Creates a new PegawaiPendidikan model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Pegawai();
+        $model = new PegawaiPendidikan();
+
+        $id_pegawai = Yii::$app->request->get('id');
+        $model->id_pegawai = $id_pegawai;
+
+        $tingkatPendidikan = \app\models\MasterTingkatPendidikan::find()->all();
+        $pendidikanArray = ArrayHelper::map($tingkatPendidikan,'id','nama');
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $foto = UploadedFile::getInstance($model,'foto');
+            $scan_ijazah = UploadedFile::getInstance($model,'scan_ijazah');
 
-            if(!is_null($foto)){
+            if(!is_null($scan_ijazah)){
                 $date = date("YmdHis");
-                $fileName=Yii::$app->user->identity->nip.$date.'.'.$foto->extension;
-                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/foto/';
+                $fileName=$model->id_pegawai.$model->id_tingkat_pendidikan.$date.'.'.$scan_ijazah->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/scan/';
                 $pathUpload = Yii::$app->params['uploadPath'].$fileName;
-                $foto->saveAs($pathUpload);
-                $model->foto = $fileName;
+                $scan_ijazah->saveAs($pathUpload);
+                $model->scan_ijazah = $fileName;
             }
 
-            $model->created_date = date('Y-m-d H:i:s');
-            $model->updated_by = Yii::$app->user->identity->id;
+            $model->created_by = Yii::$app->user->identity->id;
+            $model->created_date = date("Y-m-d H:i:s");
             $model->save();
-            
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+
         return $this->render('create', [
             'model' => $model,
+            'pendidikanArray' => $pendidikanArray,
         ]);
     }
 
     /**
-     * Updates an existing Pegawai model.
+     * Updates an existing PegawaiPendidikan model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -101,38 +114,41 @@ class PegawaiController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        $temp_foto = $model->foto;
+        $temp_scan = $model->scan_ijazah;
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $foto = UploadedFile::getInstance($model,'foto');
-            
-            if(!is_null($foto)){
+            $scan_ijazah = UploadedFile::getInstance($model,'scan_ijazah');
+
+            if(!is_null($scan_ijazah)){
                 $date = date("YmdHis");
-                $fileName=Yii::$app->user->identity->nip.$date.'.'.$foto->extension;
-                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/foto/';
+                $fileName=$model->id_pegawai.$model->id_tingkat_pendidikan.$date.'.'.$scan_ijazah->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/scan/';
                 $pathUpload = Yii::$app->params['uploadPath'].$fileName;
-                $foto->saveAs($pathUpload);
-                $model->foto = $fileName;
+                $scan_ijazah->saveAs($pathUpload);
+                $model->scan_ijazah = $fileName;
             }else{
-                $model->foto = $temp_foto;
+                $model->scan_ijazah = $temp_scan;
             }
 
-
-            $model->updated_date = date('Y-m-d H:i:s');
             $model->updated_by = Yii::$app->user->identity->id;
+            $model->updated_date = date("Y-m-d H:i:s");
             $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $tingkatPendidikan = \app\models\MasterTingkatPendidikan::find()->all();
+        $pendidikanArray = ArrayHelper::map($tingkatPendidikan,'id','nama');
+
         return $this->render('update', [
             'model' => $model,
+            'pendidikanArray' => $pendidikanArray,
         ]);
     }
 
     /**
-     * Deletes an existing Pegawai model.
+     * Deletes an existing PegawaiPendidikan model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -146,15 +162,15 @@ class PegawaiController extends Controller
     }
 
     /**
-     * Finds the Pegawai model based on its primary key value.
+     * Finds the PegawaiPendidikan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Pegawai the loaded model
+     * @return PegawaiPendidikan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Pegawai::findOne($id)) !== null) {
+        if (($model = PegawaiPendidikan::findOne($id)) !== null) {
             return $model;
         }
 

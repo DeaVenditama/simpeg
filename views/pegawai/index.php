@@ -31,10 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'header' => 'Action',
                         'class' => 'yii\grid\ActionColumn',
-                        'template' => '{view} {update} {delete}',
+                        'template' => '{view} {pangkat} {pendidikan} {update} {delete}',
                         'buttons' => [
                             'view' => function ($url) {
                                 return Html::a('view', $url, ['class'=>'btn btn-primary']);
+                            },
+                            'pangkat' => function ($url,$model) {
+                                $url = Url::to(['pegawai-pangkat-golongan/create','id'=>$model->id]);
+                                return Html::a('pangkat', $url, ['class'=>'btn btn-warning']);
+                            },
+                            'pendidikan' => function ($url,$model) {
+                                $url = Url::to(['pegawai-pendidikan/create','id'=>$model->id]);
+                                return Html::a('pendidikan', $url, ['class'=>'btn btn-info']);
                             },
                             'update' => function ($url,$model) {
                                 return Html::a('update', $url, ['class'=>'btn btn-success']);
