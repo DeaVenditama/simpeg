@@ -41,6 +41,9 @@ class PegawaiPangkatGolonganController extends Controller
         $searchModel = new PegawaiPangkatGolonganSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['id_pegawai'=>$id_pegawai]);
+        $dataProvider->sort->attributes['golongan'] = [ 
+            'default' => SORT_DESC
+        ]; 
 
         return $this->render('index', [
             'searchModel' => $searchModel,

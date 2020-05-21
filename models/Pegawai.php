@@ -153,7 +153,7 @@ class Pegawai extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getLastPangkat()
     {
-        $query = "SELECT t.id_master_pangkat_golongan,m.pangkat, m.golongan FROM pegawai_pangkat_golongan t INNER JOIN master_pangkat_golongan m ON t.id_master_pangkat_golongan = m.id WHERE t.id_pegawai=:id_pegawai ORDER BY t.id DESC LIMIT 1";
+        $query = "SELECT t.id_master_pangkat_golongan,m.pangkat, m.golongan FROM pegawai_pangkat_golongan t INNER JOIN master_pangkat_golongan m ON t.id_master_pangkat_golongan = m.id WHERE t.id_pegawai=:id_pegawai ORDER BY m.id DESC LIMIT 1";
         $last = Yii::$app->db->createCommand($query)->bindValue("id_pegawai",$this->id)->queryOne();
         return $last; 
     }

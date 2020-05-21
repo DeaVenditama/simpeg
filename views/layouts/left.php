@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -5,7 +10,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <?= Html::img('@web/uploads/foto/'.Yii::$app->user->identity->foto, ['class' => "img-circle"]) ?>
             </div>
             <div class="pull-left info">
                 <p><?= Yii::$app->user->identity->nama ?></p>

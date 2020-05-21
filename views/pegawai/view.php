@@ -31,7 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-3">
                     <div class="text-center">
-                        <?= Html::img('@web/uploads/foto/'.$model->foto, ['alt' => $model->nama]) ?>
+                        <?php 
+                            if(strlen($model->foto)<30){
+                                echo Html::img('@web/user.png', ['alt' => $model->nama]);
+                            }else{
+                                Html::img('@web/uploads/foto/'.$model->foto, ['alt' => $model->nama]);     
+                            }
+                        ?>
                         <?php 
                             $urlHistory = Url::to(['pegawai-pangkat-golongan/index','id_pegawai'=>$model->id]);
 
