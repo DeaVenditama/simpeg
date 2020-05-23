@@ -64,6 +64,46 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionDashboard()
+    {
+        //Query Pegawai Menurut TMT
+        $queryPegawaiMenurutTmt = "
+            SELECT YEAR(tmt) as tahun_masuk,
+            (
+                SELECT COUNT(s.id)
+                FROM pegawai s
+                WHERE YEAR(s.tmt) <= YEAR(p.TMT)
+            ) as jumlah
+            FROM pegawai p
+            GROUP BY tahun_masuk
+            ORDER BY tahun_masuk DESC LIMIT 10
+        ";
+
+        $pegawaiMenurutTmt = Yii::$app->db->createCommand($queryPegawaiMenurutTmt)->queryAll();
+
+        //Query Pegawai Menurut Pendidikan
+        $queryPegawaiMenurutPendidikan = "
+            SELECT m.nama, COUNT(p.id) AS jumlah FROM pegawai_pendidikan p LEFT JOIN master_tingkat_pendidikan m ON p.id_tingkat_pendidikan = m.id GROUP BY p.id_tingkat_pendidikan
+        ";
+
+        $pegawaiMenurutPendidikan = Yii::$app->db->createCommand($queryPegawaiMenurutPendidikan)->queryAll();
+
+        //Query Pegawai Menurut Golongan
+        $queryPegawaiMenurutGolongan = "
+            SELECT m.golongan AS nama, COUNT(p.id) AS jumlah FROM pegawai_pangkat_golongan p LEFT JOIN master_pangkat_golongan m ON p.id_master_pangkat_golongan = m.id GROUP BY p.id_master_pangkat_golongan
+        ";
+
+        $pegawaiMenurutGolongan = Yii::$app->db->createCommand($queryPegawaiMenurutGolongan)->queryAll();
+
+        return $this->render('dashboard',
+            [
+                'pegawaiMenurutTmt' => $pegawaiMenurutTmt,
+                'pegawaiMenurutPendidikan' => $pegawaiMenurutPendidikan,
+                'pegawaiMenurutGolongan' => $pegawaiMenurutGolongan
+            ]
+        );
+    }
+
     /**
      * Login action.
      *
