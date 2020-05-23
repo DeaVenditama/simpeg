@@ -10,8 +10,8 @@ Struktur database terdapat pada folder db.
   <li>Part 2.5 Generate Dummy Data : https://medium.com/@deavenditama/membuat-sistem-informasi-kepegawaian-simpeg-sederhana-menggunakan-yii2-part-2-5-generate-d71104c07d15</li>
   <li>Part 3 Membuat Dashboard : https://medium.com/@deavenditama/membuat-sistem-informasi-kepegawaian-simpeg-sederhana-menggunakan-yii2-part-3-dashboard-979c261e8ec3</li>
 </ol>
-Terdapat juga video tutorial untuk seri membuat Simpeg Sederhana menggunakan yii2:
-https://www.youtube.com/watch?v=KRQh2oXLbF0&list=PL6Q0e1MsNEULOVHmQ6Jz1-0gmsNnSgRN9
+<p>Terdapat juga video tutorial untuk seri membuat Simpeg Sederhana menggunakan yii2:<br/>
+https://www.youtube.com/watch?v=KRQh2oXLbF0&list=PL6Q0e1MsNEULOVHmQ6Jz1-0gmsNnSgRN9</p>
 
 <h4>Dea Venditama</h4>
 <ul>
