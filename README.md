@@ -13,8 +13,10 @@ Struktur database terdapat pada folder db.
 Terdapat juga video tutorial untuk seri membuat Simpeg Sederhana menggunakan yii2:
 https://www.youtube.com/watch?v=KRQh2oXLbF0&list=PL6Q0e1MsNEULOVHmQ6Jz1-0gmsNnSgRN9
 
-Dea Venditama
-medium : https://medium.com/@deavenditama
-Facebook : https://www.facebook.com/DeaVenditama/
-Linkedin : https://www.linkedin.com/in/deavenditama/
-Youtube : https://www.youtube.com/channel/UClHFgsS6lUNwlXdFUKP_U0w
+<h4>Dea Venditama</h4>
+<ul>
+<li>medium : https://medium.com/@deavenditama</li>
+<li>Facebook : https://www.facebook.com/DeaVenditama/</li>
+<li>Linkedin : https://www.linkedin.com/in/deavenditama/</li>
+<li>Youtube : https://www.youtube.com/channel/UClHFgsS6lUNwlXdFUKP_U0w</li>
+</ul>
